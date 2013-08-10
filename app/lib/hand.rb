@@ -10,6 +10,10 @@ class Hand
     test_helper
   end
 
+  def pair?
+    has_recurrences_of?(2)
+  end
+
   def two_pairs?
     response = [false]
     pair_counter = 0
@@ -154,19 +158,19 @@ class Hand
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card = Card.new(:suit => 'C', :rank => 2)
+    card = Card.new(:suit => 'C', :rank => 3)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card = Card.new(:suit => 'C', :rank => 2)
+    card = Card.new(:suit => 'C', :rank => 4)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card =  Card.new(:suit => 'C', :rank => 4)
+    card =  Card.new(:suit => 'C', :rank => 5)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card =  Card.new(:suit => 'C', :rank => 4)
+    card =  Card.new(:suit => 'C', :rank => 7)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
