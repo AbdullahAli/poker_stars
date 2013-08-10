@@ -10,6 +10,32 @@ class Hand
     test_helper
   end
 
+  def two_pairs?
+    response = [false]
+    pair_counter = 0
+    highest_pair = 0
+
+    get_rank_appearances.each do |k,v|
+      if v >= 2
+        if v >= 4
+          pair_counter += 2
+        else
+          pair_counter += 1
+        end
+
+        if k > highest_pair
+          highest_pair = k
+        end
+      end
+    end
+
+    if pair_counter == 2
+      response = [true, highest_pair]
+    end
+
+    response
+  end
+
   def three_of_a_kind?
     response = [false]
     is_3_of_a_kind, highest_number = has_recurrences_of?(3)
@@ -136,7 +162,7 @@ class Hand
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card =  Card.new(:suit => 'C', :rank => 3)
+    card =  Card.new(:suit => 'C', :rank => 4)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
