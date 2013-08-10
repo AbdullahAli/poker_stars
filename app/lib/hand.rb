@@ -10,6 +10,17 @@ class Hand
     test_helper
   end
 
+  def three_of_a_kind?
+    response = [false]
+    is_3_of_a_kind, highest_number = has_recurrences_of?(3)
+
+    if is_3_of_a_kind
+      response = [true, highest_number]
+    end
+
+    response
+  end
+
   def straight?
     response = [false]
     is_consecutive = consecutive?
@@ -117,11 +128,11 @@ class Hand
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card = Card.new(:suit => 'C', :rank => 5)
+    card = Card.new(:suit => 'C', :rank => 2)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card = Card.new(:suit => 'C', :rank => 6)
+    card = Card.new(:suit => 'C', :rank => 2)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
