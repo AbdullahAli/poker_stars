@@ -10,6 +10,16 @@ class Hand
     test_helper
   end
 
+  def flush?
+    response = [false]
+
+    if all_same_suit?
+      response = [true, get_highest_card]
+    end
+
+    response
+  end
+
   def full_house?
     response = [false]
     rank_appearances = get_rank_appearances
@@ -109,7 +119,7 @@ class Hand
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card =  Card.new(:suit => 'H', :rank => 2)
+    card =  Card.new(:suit => 'C', :rank => 2)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
