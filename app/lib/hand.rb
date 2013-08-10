@@ -15,6 +15,25 @@ class Hand
     self.ranks.each_cons(2).all? { |c1, c2| c1 == (c2 - 1)}
   end
 
+  def all_same_suit?
+    suits.uniq.size == 1
+  end
+
+  def get_highest_card
+    self.ranks.last
+  end
+
+  def straight_flush?
+    response = [false]
+    is_straight_flush = (consecutive? && all_same_suit?)
+
+    if is_straight_flush
+      response = [consecutive? && all_same_suit?, get_highest_card]
+    end
+
+    response
+  end
+
   # since time does not allow for writing tests
   def test_helper
     self.cards = []
