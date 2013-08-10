@@ -23,6 +23,21 @@ class Hand
     self.ranks.last
   end
 
+  def four_of_a_kind?
+    response = [false]
+    get_rank_appearances.any? do |k,v|
+      if v == 4
+        response = [true, k]
+      end
+    end
+
+    response
+  end
+
+  def get_rank_appearances
+    ranks.inject(Hash.new(0)) { |t, e| t[e] += 1; t }
+  end
+
   def straight_flush?
     response = [false]
     is_straight_flush = (consecutive? && all_same_suit?)
@@ -48,15 +63,15 @@ class Hand
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card = Card.new(:suit => 'C', :rank => 3)
+    card = Card.new(:suit => 'C', :rank => 4)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card =  Card.new(:suit => 'C', :rank => 6)
+    card =  Card.new(:suit => 'C', :rank => 4)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card =  Card.new(:suit => 'H', :rank => 5)
+    card =  Card.new(:suit => 'H', :rank => 4)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
