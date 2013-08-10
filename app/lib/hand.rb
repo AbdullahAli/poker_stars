@@ -10,6 +10,16 @@ class Hand
     test_helper
   end
 
+  def straight?
+    response = [false]
+    is_consecutive = consecutive?
+
+    if is_consecutive
+      response = [true, get_highest_card]
+    end
+    response
+  end
+
   def flush?
     response = [false]
 
@@ -107,19 +117,19 @@ class Hand
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card = Card.new(:suit => 'C', :rank => 4)
+    card = Card.new(:suit => 'C', :rank => 5)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
-    card = Card.new(:suit => 'C', :rank => 4)
+    card = Card.new(:suit => 'C', :rank => 6)
+      self.cards << card
+      self.ranks << card.rank
+      self.suits << card.suit
+    card =  Card.new(:suit => 'C', :rank => 3)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
     card =  Card.new(:suit => 'C', :rank => 4)
-      self.cards << card
-      self.ranks << card.rank
-      self.suits << card.suit
-    card =  Card.new(:suit => 'C', :rank => 2)
       self.cards << card
       self.ranks << card.rank
       self.suits << card.suit
