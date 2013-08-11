@@ -1,4 +1,5 @@
 require 'active_model'
+require './response'
 require './deck'
 
 class Hand
@@ -7,11 +8,25 @@ class Hand
 
   def initialize
     super
-    test_helper
+    draw_cards
+    self.ranks = self.ranks.sort
+  end
+
+  def draw_cards
+    self.cards = []
+    self.ranks = []
+    self.suits = []
+
+    5.times do
+      card = Deck.random_card
+      self.cards << card
+      self.ranks << card.rank
+      self.suits << card.suit
+    end
   end
 
   def pair?
-    has_recurrences_of?(2)
+    Response.new(has_recurrences_of?(2))
   end
 
   def two_pairs?
@@ -37,7 +52,7 @@ class Hand
       response = [true, highest_pair]
     end
 
-    response
+    Response.new(response)
   end
 
   def three_of_a_kind?
@@ -48,7 +63,7 @@ class Hand
       response = [true, highest_number]
     end
 
-    response
+    Response.new(response)
   end
 
   def straight?
@@ -58,7 +73,8 @@ class Hand
     if is_consecutive
       response = [true, get_highest_card]
     end
-    response
+
+    Response.new(response)
   end
 
   def flush?
@@ -68,7 +84,7 @@ class Hand
       response = [true, get_highest_card]
     end
 
-    response
+    Response.new(response)
   end
 
   def full_house?
@@ -82,7 +98,8 @@ class Hand
         response = [true, highest_number]
       end
     end
-    response
+
+    Response.new(response)
   end
 
   def four_of_a_kind?
@@ -93,7 +110,7 @@ class Hand
       end
     end
 
-    response
+    Response.new(response)
   end
 
   def straight_flush?
@@ -104,7 +121,7 @@ class Hand
       response = [consecutive? && all_same_suit?, get_highest_card]
     end
 
-    response
+    Response.new(response)
   end
 
   private
@@ -146,34 +163,5 @@ class Hand
 
   def get_highest_card
     self.ranks.last
-  end
-
-  # since time does not allow for writing tests
-  def test_helper
-    self.cards = []
-    self.ranks = []
-    self.suits = []
-
-    card = Card.new(:suit => 'C', :rank => 2)
-      self.cards << card
-      self.ranks << card.rank
-      self.suits << card.suit
-    card = Card.new(:suit => 'C', :rank => 3)
-      self.cards << card
-      self.ranks << card.rank
-      self.suits << card.suit
-    card = Card.new(:suit => 'C', :rank => 4)
-      self.cards << card
-      self.ranks << card.rank
-      self.suits << card.suit
-    card =  Card.new(:suit => 'C', :rank => 5)
-      self.cards << card
-      self.ranks << card.rank
-      self.suits << card.suit
-    card =  Card.new(:suit => 'C', :rank => 7)
-      self.cards << card
-      self.ranks << card.rank
-      self.suits << card.suit
-    self.ranks = self.ranks.sort
   end
 end
