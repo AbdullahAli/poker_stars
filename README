@@ -1,0 +1,58 @@
+#MORE TO DO:
+#
+#1) create Game logic class:
+    # create hands
+    # choose_winner
+    #
+    #
+    # choose_winner:
+    #   if h1 or h1 is straight_flush
+    #     if both
+    #       winner is hand with highest response.value
+    #     else
+    #       one of them is the winner
+    #
+    #   elsif h1 or h2 is four_of_a_kind
+    #     if both
+    #       winner is hand with highest response.value
+    #     else
+    #       one of them is the winner
+    #
+    #   elsif h1 or h2 is full_house
+    #     if both
+    #       winner is hand with highest response.value
+    #     else
+    #       one of them is the winner
+    #
+    #   elsif h1 or h2 is flush
+    #     if both
+    #       winner is hand with highest high_card
+    #     else
+    #       one of them is the winner
+    #
+    #   elsif h1 or h2 is straight
+    #     if both
+    #       winner is hand with highest response.value
+    #     else
+    #       one of them is the winner
+    #
+    #   elsif h1 or h2 is two_pairs
+    #     ...
+    #   elsif h1 or h2 is pair
+    #     ...
+    #   else
+    #     call High Card function
+#
+#2) create high card function in hand class
+      #function(other_hand)
+      # h1_ranks = self.ranks
+      # h2_ranks = other_hand.ranks
+      #
+      # pop sorted arrays together, and compare, winner is highest
+#
+#3) create function in card to map ranks to letters
+      #function()
+      # if rank >= 9, return letter T,J,Q,K,A accordingly
+#
+#5) ensure hand only allowed to have 5 cards
+#6) tests
