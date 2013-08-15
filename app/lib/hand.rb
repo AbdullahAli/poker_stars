@@ -1,8 +1,6 @@
-require 'active_model'
 require './deck'
 
 class Hand
-  include ActiveModel::Model
   attr_accessor :cards, :ranks, :suits
 
   def initialize
