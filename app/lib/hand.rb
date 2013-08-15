@@ -6,7 +6,7 @@ class Hand
   def initialize
     super
     draw_cards
-    self.ranks = self.ranks.sort
+    self.ranks.sort!
   end
 
   def draw_cards
@@ -23,134 +23,141 @@ class Hand
   end
 
   def pair?
+    has_recurrences_of?(2)
   end
 
   def two_pairs?
     response = [false]
-    pair_counter = 0
+    pairs_found = 0
     highest_pair = 0
 
-    get_rank_appearances.each do |k,v|
-      if v >= 2
-        if v >= 4
-          pair_counter += 2
+    rank_appearances.each do |card, occurance|
+      if occurance >= 2
+        if occurance >= 4
+          pairs_found += 2
         else
-          pair_counter += 1
+          pairs_found += 1
         end
 
-        if k > highest_pair
-          highest_pair = k
+        if card > highest_pair
+          highest_pair = card
         end
       end
     end
 
-    if pair_counter == 2
+    if pairs_found == 2
       response = [true, highest_pair]
     end
 
+    response
   end
 
   def three_of_a_kind?
     response = [false]
-    is_3_of_a_kind, highest_number = has_recurrences_of?(3)
+    three_of_a_kind, highest_card = has_recurrences_of?(3)
 
-    if is_3_of_a_kind
-      response = [true, highest_number]
+    if three_of_a_kind
+      response = [true, highest_card]
     end
 
+   response
   end
 
   def straight?
     response = [false]
-    is_consecutive = consecutive?
 
-    if is_consecutive
-      response = [true, get_highest_card]
+    if consecutive?
+      response = [true, highest_card]
     end
 
+    response
   end
 
   def flush?
     response = [false]
 
-    if all_same_suit?
-      response = [true, get_highest_card]
+    if same_suits?
+      response = [true, highest_card]
     end
 
+    response
   end
 
   def full_house?
     response = [false]
-    rank_appearances = get_rank_appearances
-    is_3_with_same_value, highest_number = has_recurrences_of?(3)
-    rank_appearances.delete(highest_number)
+    rank_appearances_result = rank_appearances
+    three_with_same_value, highest_card = has_recurrences_of?(3)
+    rank_appearances_result.delete(highest_card)
 
-    if is_3_with_same_value
-      if rank_appearances.values.first == 2
-        response = [true, highest_number]
+    if three_with_same_value
+      if rank_appearances_result.values.first == 2
+        response = [true, highest_card]
       end
     end
 
+    response
   end
 
   def four_of_a_kind?
     response = [false]
-    get_rank_appearances.any? do |k,v|
-      if v == 4
-        response = [true, k]
+    rank_appearances.any? do |card, occurance|
+      if occurance == 4
+        response = [true, card]
       end
     end
 
+    response
   end
 
   def straight_flush?
     response = [false]
-    is_straight_flush = (consecutive? && all_same_suit?)
+    is_straight_flush = (consecutive? && same_suits?)
 
     if is_straight_flush
-      response = [consecutive? && all_same_suit?, get_highest_card]
+      response = [consecutive? && same_suits?, highest_card]
     end
 
+    response
   end
 
   private
 
   def has_recurrences_of?(required_count)
     response = [false]
-    matched = false
-    highest_number = 0
+    found = false
+    highest_card = 0
 
-    get_rank_appearances(ranks).each do |k,v|
-      if v >= required_count
-        matched = true
+    rank_appearances(ranks).each do |card, occurance|
+      if occurance >= required_count
+        found = true
 
-        if k > highest_number
-          highest_number = k
+        if card > highest_card
+          highest_card = card
         end
       end
     end
 
-    if matched
-      response = [true, highest_number]
+    if found
+      response = [true, highest_card]
     end
 
     response
   end
 
   def consecutive?
-    self.ranks.each_cons(2).all? { |c1, c2| c1 == (c2 - 1)}
+    self.ranks.each_cons(2).all? { |card_1, card_2| card_1 == (card_2 - 1)}
   end
 
-  def get_rank_appearances(ranks = {})
+  def rank_appearances(ranks = {})
     ranks = ranks.empty? ? self.ranks : ranks
     ranks.inject(Hash.new(0)) { |t, e| t[e] += 1; t }
   end
 
-  def all_same_suit?
+  def same_suits?
     suits.uniq.size == 1
   end
 
-  def get_highest_card
+  def highest_card
     self.ranks.last
   end
 end
