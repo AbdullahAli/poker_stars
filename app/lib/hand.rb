@@ -1,5 +1,4 @@
 require 'active_model'
-require './response'
 require './deck'
 
 class Hand
@@ -26,7 +25,6 @@ class Hand
   end
 
   def pair?
-    Response.new(has_recurrences_of?(2))
   end
 
   def two_pairs?
@@ -52,7 +50,6 @@ class Hand
       response = [true, highest_pair]
     end
 
-    Response.new(response)
   end
 
   def three_of_a_kind?
@@ -63,7 +60,6 @@ class Hand
       response = [true, highest_number]
     end
 
-    Response.new(response)
   end
 
   def straight?
@@ -74,7 +70,6 @@ class Hand
       response = [true, get_highest_card]
     end
 
-    Response.new(response)
   end
 
   def flush?
@@ -84,7 +79,6 @@ class Hand
       response = [true, get_highest_card]
     end
 
-    Response.new(response)
   end
 
   def full_house?
@@ -99,7 +93,6 @@ class Hand
       end
     end
 
-    Response.new(response)
   end
 
   def four_of_a_kind?
@@ -110,7 +103,6 @@ class Hand
       end
     end
 
-    Response.new(response)
   end
 
   def straight_flush?
@@ -121,7 +113,6 @@ class Hand
       response = [consecutive? && all_same_suit?, get_highest_card]
     end
 
-    Response.new(response)
   end
 
   private
